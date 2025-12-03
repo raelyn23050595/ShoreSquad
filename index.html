@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Rally your crew, track weather, and hit the next beach cleanup with our dope map app!">
+    <meta name="theme-color" content="#0077BE">
+    <title>ShoreSquad - Beach Cleanup Crew Organizer</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Leaflet Map Library -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="header" role="banner">
+        <nav class="navbar" role="navigation" aria-label="Main navigation">
+            <div class="container">
+                <div class="nav-wrapper">
+                    <a href="#" class="logo" aria-label="ShoreSquad Home">
+                        <svg class="logo-icon" width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+                            <circle cx="16" cy="16" r="14" stroke="currentColor" stroke-width="2"/>
+                            <path d="M16 8C12 8 9 11 9 15c0 4 7 10 7 10s7-6 7-10c0-4-3-7-7-7z" fill="currentColor"/>
+                        </svg>
+                        <span class="logo-text">ShoreSquad</span>
+                    </a>
+                    <button class="menu-toggle" aria-expanded="false" aria-label="Toggle navigation menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <ul class="nav-menu" id="navMenu">
+                        <li><a href="#map" class="nav-link">Find Cleanup</a></li>
+                        <li><a href="#crews" class="nav-link">My Crews</a></li>
+                        <li><a href="#weather" class="nav-link">Weather</a></li>
+                        <li><a href="#impact" class="nav-link">Impact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" role="region" aria-label="Hero section">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Rally Your Crew</h1>
+                <p class="hero-subtitle">Track weather. Hit the next beach cleanup. Make impact together.</p>
+                <div class="hero-actions">
+                    <button class="btn btn-primary" id="joinCrewBtn">Join a Crew</button>
+                    <button class="btn btn-secondary" id="startCrewBtn">Start a Cleanup</button>
+                </div>
+            </div>
+            <div class="hero-graphic">
+                <svg class="wave" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true">
+                    <path d="M0,50 Q300,0 600,50 T1200,50 L1200,120 L0,120 Z" fill="currentColor"/>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="section map-section" id="map" role="region" aria-label="Interactive cleanup map">
+        <div class="container">
+            <h2>Cleanups Near You</h2>
+            <div class="map-wrapper">
+                <div id="mapContainer" class="map-container"></div>
+                <aside class="map-sidebar" role="complementary" aria-label="Cleanup details">
+                    <h3>Nearby Cleanups</h3>
+                    <ul id="cleanupList" class="cleanup-list" role="list"></ul>
+                </aside>
+            </div>
+        </div>
+    </section>
+
+    <!-- Crews Section -->
+    <section class="section crews-section" id="crews" role="region" aria-label="Your crews">
+        <div class="container">
+            <h2>Your Crews</h2>
+            <div class="crews-grid" id="crewsGrid" role="list">
+                <!-- Dynamically populated -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Weather Section -->
+    <section class="section weather-section" id="weather" role="region" aria-label="Weather forecast">
+        <div class="container">
+            <h2>Weather Forecast</h2>
+            <div class="weather-cards" id="weatherCards" role="list">
+                <!-- Dynamically populated -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Stats Section -->
+    <section class="section impact-section" id="impact" role="region" aria-label="Environmental impact">
+        <div class="container">
+            <h2>Your Impact</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="totalCleanups">0</div>
+                    <div class="stat-label">Cleanups</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="totalCrew">0</div>
+                    <div class="stat-label">Crew Members</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="plasticCollected">0</div>
+                    <div class="stat-label">lbs Collected</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="beachesClean">0</div>
+                    <div class="stat-label">Beaches Cleaned</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call-to-Action Section -->
+    <section class="section cta-section" role="region" aria-label="Call to action">
+        <div class="container">
+            <h2>Ready to Make Waves?</h2>
+            <p>Join thousands of young people making a real impact on our beaches.</p>
+            <button class="btn btn-primary btn-large">Get Started Today</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>ShoreSquad</h4>
+                    <p>Rally your crew. Save our shores.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul role="list">
+                        <li><a href="#map">Find Cleanup</a></li>
+                        <li><a href="#crews">My Crews</a></li>
+                        <li><a href="#impact">Impact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <ul role="list">
+                        <li><a href="#" aria-label="Instagram">Instagram</a></li>
+                        <li><a href="#" aria-label="Twitter">Twitter</a></li>
+                        <li><a href="#" aria-label="TikTok">TikTok</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ShoreSquad. Built with 🌊 by eco-warriors.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Main App Script -->
+    <script src="js/app.js" defer></script>
+</body>
+</html>
