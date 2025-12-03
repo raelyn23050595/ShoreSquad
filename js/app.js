@@ -302,24 +302,95 @@ const ShoreSquadApp = {
         const weatherCards = document.getElementById('weatherCards');
         if (!weatherCards) return;
 
-        const weatherData = [
-            { day: 'Today', temp: 22, condition: 'Sunny ☀️', uv: 'High' },
-            { day: 'Tomorrow', temp: 20, condition: 'Partly Cloudy ⛅', uv: 'Medium' },
-            { day: 'Dec 10', temp: 21, condition: 'Sunny ☀️', uv: 'High' }
+        // Fetch from NEA 4-Day Weather Forecast API
+        this.fetchNEAWeather();
+    },
+
+    async fetchNEAWeather() {
+        try {
+            const response = await fetch('https://api.data.gov.sg/v1/environment/4day-weather-forecast');
+            const data = await response.json();
+            
+            if (data.items && data.items.length > 0) {
+                const forecasts = data.items[0].forecast;
+                this.renderWeatherCards(forecasts);
+                console.log('✅ NEA weather data loaded');
+            }
+        } catch (error) {
+            console.warn('⚠️ NEA API error, using fallback:', error.message);
+            this.renderWeatherCardsFallback();
+        }
+    },
+
+    renderWeatherCards(forecasts) {
+        const weatherCards = document.getElementById('weatherCards');
+        if (!weatherCards) return;
+
+        weatherCards.innerHTML = forecasts.map(forecast => {
+            const date = new Date(forecast.date);
+            const dayName = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][date.getDay()];
+            const dateStr = date.getDate();
+            
+            return `
+                <div class="weather-card" role="article">
+                    <div class="weather-date">
+                        <div class="weather-day">${dayName}</div>
+                        <div class="weather-date-num">${dateStr}</div>
+                    </div>
+                    <div class="weather-icon">${this.getWeatherEmoji(forecast.forecast)}</div>
+                    <div class="weather-condition">${forecast.forecast}</div>
+                    <div class="weather-temp-range">
+                        <span class="temp-high">${forecast.temperature.max}°C</span>
+                        <span class="temp-sep">→</span>
+                        <span class="temp-low">${forecast.temperature.min}°C</span>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        console.log('🌤️ Weather forecast rendered');
+    },
+
+    renderWeatherCardsFallback() {
+        const weatherCards = document.getElementById('weatherCards');
+        if (!weatherCards) return;
+
+        const fallbackData = [
+            { day: 'Today', dayNum: 3, emoji: '☀️', condition: 'Sunny', max: 28, min: 22 },
+            { day: 'Tomorrow', dayNum: 4, emoji: '⛅', condition: 'Partly Cloudy', max: 27, min: 20 },
+            { day: 'Wednesday', dayNum: 5, emoji: '🌧️', condition: 'Showers', max: 25, min: 19 },
+            { day: 'Thursday', dayNum: 6, emoji: '⛈️', condition: 'Thunderstorms', max: 24, min: 18 }
         ];
 
-        weatherCards.innerHTML = weatherData.map(w => `
+        weatherCards.innerHTML = fallbackData.map(w => `
             <div class="weather-card" role="article">
-                <div class="weather-icon">${w.condition.split(' ')[1]}</div>
-                <div class="weather-temp">${w.temp}°C</div>
-                <div class="weather-condition">${w.condition.split(' ')[0]}</div>
-                <div style="font-size: 0.85rem; color: #666; margin-top: 8px;">
-                    UV: ${w.uv}
+                <div class="weather-date">
+                    <div class="weather-day">${['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][w.dayNum]}</div>
+                    <div class="weather-date-num">${new Date().getDate() + (w.dayNum - 3)}</div>
+                </div>
+                <div class="weather-icon">${w.emoji}</div>
+                <div class="weather-condition">${w.condition}</div>
+                <div class="weather-temp-range">
+                    <span class="temp-high">${w.max}°C</span>
+                    <span class="temp-sep">→</span>
+                    <span class="temp-low">${w.min}°C</span>
                 </div>
             </div>
         `).join('');
 
-        console.log('🌤️ Weather rendered');
+        console.log('🌤️ Weather forecast (fallback) rendered');
+    },
+
+    getWeatherEmoji(condition) {
+        const lowerCondition = condition.toLowerCase();
+        if (lowerCondition.includes('sunny') || lowerCondition.includes('clear')) return '☀️';
+        if (lowerCondition.includes('cloudy') || lowerCondition.includes('overcast')) return '☁️';
+        if (lowerCondition.includes('partly')) return '⛅';
+        if (lowerCondition.includes('rain') || lowerCondition.includes('shower')) return '🌧️';
+        if (lowerCondition.includes('thunder') || lowerCondition.includes('storm')) return '⛈️';
+        if (lowerCondition.includes('fog') || lowerCondition.includes('haze')) return '🌫️';
+        if (lowerCondition.includes('wind')) return '💨';
+        return '🌊';
     },
 
     updateStats() {
