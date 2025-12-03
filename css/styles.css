@@ -365,6 +365,82 @@ a:focus {
     background-color: var(--light-sand);
 }
 
+/* Next Cleanup Spotlight */
+.next-cleanup-spotlight {
+    background: var(--white);
+    border-radius: 12px;
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+    box-shadow: 0 4px 16px rgba(0, 119, 190, 0.15);
+    border-left: 4px solid var(--teal);
+    animation: slideInDown 0.6s ease;
+}
+
+.next-cleanup-header {
+    margin-bottom: var(--spacing-lg);
+}
+
+.next-cleanup-header h3 {
+    font-size: 1.5rem;
+    color: var(--primary-blue);
+    margin-bottom: var(--spacing-sm);
+}
+
+.next-cleanup-date {
+    color: var(--text-light);
+    font-size: 0.95rem;
+    margin-bottom: 0;
+}
+
+.google-maps-wrapper {
+    margin-bottom: var(--spacing-lg);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.google-maps-wrapper iframe {
+    display: block;
+}
+
+.cleanup-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.cleanup-info-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background-color: var(--light-sand);
+    border-radius: 8px;
+}
+
+.info-icon {
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.info-text {
+    color: var(--text-dark);
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .map-wrapper {
     display: grid;
     grid-template-columns: 1fr 300px;
@@ -414,12 +490,20 @@ a:focus {
 
 /* Responsive Map */
 @media (max-width: 768px) {
+    .cleanup-info {
+        grid-template-columns: 1fr;
+    }
+    
     .map-wrapper {
         grid-template-columns: 1fr;
     }
     
     .map-container {
         height: 350px;
+    }
+    
+    .next-cleanup-spotlight {
+        padding: var(--spacing-md);
     }
 }
 
