@@ -165,8 +165,8 @@ const ShoreSquadApp = {
                 location: { lat: 32.7597, lng: -117.2483 },
                 date: 'Dec 10, 2025',
                 crewSize: 12,
-                weather: '72°F, Sunny ☀️',
-                plasticTarget: 200
+                weather: '22°C, Sunny ☀️',
+                plasticTarget: 91
             },
             {
                 id: 2,
@@ -174,8 +174,8 @@ const ShoreSquadApp = {
                 location: { lat: 32.8007, lng: -117.2467 },
                 date: 'Dec 15, 2025',
                 crewSize: 8,
-                weather: '68°F, Partly Cloudy ⛅',
-                plasticTarget: 150
+                weather: '20°C, Partly Cloudy ⛅',
+                plasticTarget: 68
             },
             {
                 id: 3,
@@ -183,8 +183,8 @@ const ShoreSquadApp = {
                 location: { lat: 32.7345, lng: -117.2456 },
                 date: 'Dec 20, 2025',
                 crewSize: 15,
-                weather: '70°F, Clear 🌊',
-                plasticTarget: 250
+                weather: '21°C, Clear 🌊',
+                plasticTarget: 113
             }
         ];
 
@@ -303,15 +303,15 @@ const ShoreSquadApp = {
         if (!weatherCards) return;
 
         const weatherData = [
-            { day: 'Today', temp: 72, condition: 'Sunny ☀️', uv: 'High' },
-            { day: 'Tomorrow', temp: 68, condition: 'Partly Cloudy ⛅', uv: 'Medium' },
-            { day: 'Dec 10', temp: 70, condition: 'Sunny ☀️', uv: 'High' }
+            { day: 'Today', temp: 22, condition: 'Sunny ☀️', uv: 'High' },
+            { day: 'Tomorrow', temp: 20, condition: 'Partly Cloudy ⛅', uv: 'Medium' },
+            { day: 'Dec 10', temp: 21, condition: 'Sunny ☀️', uv: 'High' }
         ];
 
         weatherCards.innerHTML = weatherData.map(w => `
             <div class="weather-card" role="article">
                 <div class="weather-icon">${w.condition.split(' ')[1]}</div>
-                <div class="weather-temp">${w.temp}°F</div>
+                <div class="weather-temp">${w.temp}°C</div>
                 <div class="weather-condition">${w.condition.split(' ')[0]}</div>
                 <div style="font-size: 0.85rem; color: #666; margin-top: 8px;">
                     UV: ${w.uv}
